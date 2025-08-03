@@ -1,136 +1,157 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>🌍 Cytra Global Music</title>
+  <meta charset="UTF-8">
+  <title>Cytra MP3 Downloader</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap');
-    body { margin:0; font-family:'Orbitron',sans-serif; background:#111; color:#fff; display:flex; height:100vh; }
-    .sidebar { width:220px; background:#1c1c1c; padding:20px; box-shadow:2px 0 10px rgba(0,0,0,0.5); display:flex; flex-direction:column; transition:width 0.3s ease; }
-    .sidebar.collapsed { width:60px; overflow:hidden; }
-    .sidebar h2 { color:#ff4081; margin-bottom:20px; white-space:nowrap; }
-    .sidebar button { background:none; border:none; color:#fff; font-size:16px; margin-bottom:15px; text-align:left; cursor:pointer; transition:color 0.3s; white-space:nowrap; }
-    .sidebar button:hover { color:#ff4081; }
-    .toggle-btn { background:none; border:none; color:#ff4081; font-size:24px; margin-bottom:20px; cursor:pointer; align-self:flex-end; }
-    .main { flex:1; padding:20px; overflow-y:auto; }
-    h1 { color:#ff4081; margin-bottom:20px; text-shadow:0 0 10px rgba(255,64,129,0.7); }
-    #search-box { width:90%; max-width:500px; padding:10px; border-radius:8px; border:none; outline:none; margin-bottom:20px; display:none; }
-    .track { background:#222; padding:20px; margin:15px auto; border-radius:8px; max-width:700px; box-shadow:0 0 10px rgba(255,64,129,0.4); transition:transform 0.3s; }
-    .track:hover { transform:scale(1.03); box-shadow:0 0 20px rgba(255,64,129,0.7); }
-    iframe { width:100%; border:none; border-radius:8px; }
-    .playlist-btn { background:#ff4081; color:#fff; padding:8px 15px; margin:5px; border:none; border-radius:5px; cursor:pointer; transition:background 0.3s; }
-    .playlist-btn:hover { background:#ff77a9; }
-    .link { display:block; padding:10px; margin:5px 0; background:#333; border-radius:5px; color:#fff; text-decoration:none; transition:background 0.3s; }
-    .link:hover { background:#ff4081; }
+    body {
+      margin: 0;
+      padding: 0;
+      background: #0f0f0f;
+      color: #fff;
+      font-family: 'Orbitron', sans-serif;
+      line-height: 1.6;
+    }
+    header {
+      background:#1c1c1c;
+      padding:20px;
+      text-align:center;
+    }
+    header h1 {
+      color:#ff4081;
+      font-size:32px;
+      margin:0;
+    }
+    header input {
+      width:60%;
+      max-width:500px;
+      padding:10px;
+      margin-top:15px;
+      border:none;
+      border-radius:6px;
+    }
+    header button {
+      padding:10px 20px;
+      background:#ff4081;
+      color:white;
+      border:none;
+      border-radius:6px;
+      margin-left:10px;
+      cursor:pointer;
+    }
+    header button:hover {
+      background:#ff77a9;
+    }
+    main {
+      padding:20px;
+    }
+    #results {
+      margin-top:20px;
+    }
+    section h2, section h3 {
+      color:#ff4081;
+      margin-top:20px;
+    }
+    details {
+      background:#1f1f1f;
+      margin:10px 0;
+      padding:10px;
+      border-radius:6px;
+    }
+    footer {
+      margin-top:50px;
+      padding:20px;
+      background:#1c1c1c;
+      text-align:center;
+      font-size:14px;
+    }
+    footer a { color:#ff4081; text-decoration:none; }
+    footer a:hover { text-decoration:underline; }
   </style>
 </head>
 <body>
-  <div class="sidebar" id="sidebar">
-    <button class="toggle-btn" onclick="toggleMenu()">☰</button>
-    <h2>🎶 Menu</h2>
-    <button onclick="showTab('trending')">🔥 Trending</button>
-    <button onclick="showTab('kenya')">🇰🇪 Kenya Top 50</button>
-    <button onclick="showTab('dancehall')">💃 Dancehall</button>
-    <button onclick="showTab('afrobeat')">🥁 Afrobeat</button>
-    <button onclick="showTab('amapiano')">🎹 Amapiano</button>
-    <button onclick="showTab('arbantone')">🎶 Arbantone</button>
-    <button onclick="showTab('search')">🔍 Search</button>
-    <button onclick="showTab('playlist')">📂 Playlist</button>
-  </div>
+  <header>
+    <h1>Cytra MP3 Downloader</h1>
+    <input type="text" id="search-box" placeholder="Paste song name or YouTube link...">
+    <button onclick="handleSearch()">Download</button>
+  </header>
 
-  <div class="main">
-    <h1 id="tab-title">🔥 Trending</h1>
-    <input type="text" id="search-box" placeholder="Search songs...">
+  <main id="content">
     <div id="results"></div>
-  </div>
+
+    <section style="margin-top:40px;">
+      <h2>About Our MP3 Converter</h2>
+      <p>This website offers a simple and intuitive interface, allowing all users to easily download their favorite music.</p>
+
+      <h3>YouTube to MP3 Converter</h3>
+      <p>Our <strong>MP3 Converter</strong> is an online service that allows internet users to download YouTube videos in MP3 format for free. The service is free, fast, and secure.</p>
+      <p>The MP3 converter is very easy to use. Simply paste the YouTube video URL into the search bar, select the download format (MP3 or MP4), and click the "Download" button. The video will then start downloading automatically.</p>
+      <p>The service is completely free and does not require registration. Downloads are unlimited, and the quality of the MP3 files is excellent. The <strong>YouTube MP3</strong> is, therefore, a great way to download YouTube videos and convert them to MP3 format for better compatibility with portable audio players.</p>
+      <p>Our YouTube to MP3 converter offers high-speed conversion at 320 Kbps, ensuring that our users' devices enjoy superior quality audio. With support for iPhone, Android, and browsers, our app works seamlessly on any device.</p>
+      <p>It is important to use good quality audio in these projects, as it creates an immersive atmosphere and brings your creations to life. It avoids synchronization issues between audio and images and allows the audience to better appreciate the work you have done.</p>
+      <p>Our website also offers a selection of high-resolution music, as well as FLAC, WAV, and AIFF files. Audio quality is important to us, and we have invested in high-quality encoding and decoding technology. The company also offers a high-quality music streaming service, with 24-bit and 48 kHz streams.</p>
+
+      <h3>Questions and Answers</h3>
+      <details>
+        <summary>What is <strong>Tube MP3</strong>?</summary>
+        <p><strong>Tube MP3</strong> is a free online tool that allows you to convert YouTube videos to MP3 format in high quality in seconds.</p>
+      </details>
+      <details>
+        <summary>How does it work?</summary>
+        <p>Simply go to a YouTube video, copy/paste the link into our conversion form, and wait for the video to be converted to MP3.</p>
+      </details>
+      <details>
+        <summary>Do I need to register?</summary>
+        <p>No. We want to make using our site as easy as possible. Therefore, no registration is required.</p>
+      </details>
+      <details>
+        <summary>Is it available on mobile devices?</summary>
+        <p>Our site is fully responsive. Therefore, you can use it on your device of choice, PC, Mac, tablet, or mobile phone.</p>
+      </details>
+      <details>
+        <summary>Is the download anonymous?</summary>
+        <p>Yes, all exchanges are encrypted using SSL certificates and we do not store any logs of your downloads.</p>
+      </details>
+      <details>
+        <summary>How many files can I download?</summary>
+        <p>Unlimited. There are no restrictions on how many files you can download.</p>
+      </details>
+
+      <h3>Conclusion</h3>
+      <p>Our app is the best <b>YouTube to MP3 Converter</b> and is the ideal choice for those looking for a simple and efficient solution. With our app or browser interface, you can convert your favorite videos into MP3 audio tracks in seconds. Just follow a few simple steps and you're done! Have your favorite songs in MP3 format quickly and conveniently.</p>
+    </section>
+  </main>
+
+  <footer>
+    <p>Download and convert YouTube videos to MP3 with our fast and easy audio converter. Our service is free and no account is needed.</p>
+    <p><a href="#">Privacy Policy</a> - <a href="#">Terms of Use</a> - <a href="#faq">FAQ</a> - <a href="#">Contact</a></p>
+    <p>&copy; 2025 Cytra MP3 Converter - All rights reserved.</p>
+  </footer>
 
   <script>
-    const results = document.getElementById('results');
-    const tabTitle = document.getElementById('tab-title');
-    const searchBox = document.getElementById('search-box');
-    let playlist = JSON.parse(localStorage.getItem('playlist')||"[]");
+    async function handleSearch() {
+      const query = document.getElementById('search-box').value.trim();
+      if (!query) return alert("Please enter a song or YouTube link.");
+      document.getElementById('results').innerHTML = "<p>Searching...</p>";
 
-    function toggleMenu(){
-      document.getElementById('sidebar').classList.toggle('collapsed');
-    }
-
-    function showTab(tab){
-      searchBox.style.display='none';
-      if(tab==='trending'){ showPlaylistEmbed("🔥 Trending (Global)","PLFgquLnL59alCl_2TQvOiD5Vgm1hCaGSI"); }
-      if(tab==='kenya'){ showPlaylistEmbed("🇰🇪 Kenya Top 50","PLQog_FHUHAFUXRAPdDtkD0JrLDPAs1wUk"); }
-      if(tab==='dancehall'){ showPlaylistEmbed("💃 Dancehall","PLP2fBKY4A2wKS3J6nsR9K3V5h8kp4Y6xF"); }
-      if(tab==='afrobeat'){ showPlaylistEmbed("🥁 Afrobeat","PL8fVUTBmJhHJMPzHY5wR1pUpG6lm6lNaM"); }
-      if(tab==='amapiano'){ showPlaylistEmbed("🎹 Amapiano","PLM7xQ48sq4kMBmJ8I1M2mA23uok7s1wbx"); }
-      if(tab==='arbantone'){ showPlaylistEmbed("🎶 Arbantone","PL7YikJgQ0YpRv3lXjKboiMo4J6ItJuh6e"); }
-      if(tab==='search'){ tabTitle.innerText="🔍 Search"; searchBox.style.display='block'; results.innerHTML="<p>Type to search...</p>"; }
-      if(tab==='playlist'){ tabTitle.innerText="📂 Playlist"; showPlaylist(); }
-    }
-
-    function showPlaylistEmbed(title,playlistId){
-      tabTitle.innerText=title;
-      results.innerHTML = `
-        <div class="track">
-          <iframe height="400" src="https://www.youtube.com/embed/videoseries?list=${playlistId}"></iframe>
-          <button class="playlist-btn" onclick="downloadMP3('${playlistId}')">Download Playlist (First Track)</button>
-        </div>`;
-    }
-
-    function searchYouTube(query){
-      results.innerHTML = `
-        <div class="track">
-          <h3>Results for "${query}"</h3>
-          <a class="link" href="https://www.youtube.com/results?search_query=${encodeURIComponent(query)}" target="_blank">Open on YouTube</a>
-          <button class="playlist-btn" onclick="addToPlaylist('${query}')">Add to Playlist</button>
-          <button class="playlist-btn" onclick="downloadMP3ByQuery('${query}')">Download MP3</button>
-        </div>`;
-    }
-
-    function addToPlaylist(query){
-      playlist.push(query);
-      localStorage.setItem('playlist', JSON.stringify(playlist));
-      alert(`"${query}" added to playlist`);
-    }
-
-    function showPlaylist(){
-      results.innerHTML = "<h2>Your Playlist</h2>";
-      if(!playlist.length){
-        results.innerHTML += "<p>No songs yet.</p>";
+      const searchRes = await fetch(`http://localhost:3000/search?q=${encodeURIComponent(query)}`);
+      const { videoId } = await searchRes.json();
+      if (!videoId) {
+        document.getElementById('results').innerHTML = "<p>No video found.</p>";
         return;
       }
-      playlist.forEach(item=>{
-        results.innerHTML+=`
-          <div class="track">
-            <h3>${item}</h3>
-            <a class="link" href="https://www.youtube.com/results?search_query=${encodeURIComponent(item)}" target="_blank">Play on YouTube</a>
-            <button class="playlist-btn" onclick="downloadMP3ByQuery('${item}')">Download MP3</button>
-          </div>`;
-      });
-    }
-
-    async function downloadMP3(videoId){
-      try {
-        const res = await fetch(`http://localhost:3000/convert?id=${videoId}`);
-        const data = await res.json();
-        if(data.downloadLink){
-          window.open(data.downloadLink,"_blank");
-        } else {
-          alert("Conversion failed or no link returned.");
-        }
-      } catch (e) {
-        alert("Error: " + e.message);
+      const convertRes = await fetch(`http://localhost:3000/convert?id=${videoId}`);
+      const data = await convertRes.json();
+      if (data.downloadLink) {
+        document.getElementById('results').innerHTML = `
+          <h3>${query}</h3>
+          <a href="${data.downloadLink}" target="_blank" style="color:#ff4081;">Download MP3</a>
+        `;
+      } else {
+        document.getElementById('results').innerHTML = "<p>Conversion failed.</p>";
       }
     }
-
-    async function downloadMP3ByQuery(query){
-      alert(`Manual download: Open YouTube for "${query}" and choose video ID to convert.`);
-    }
-
-    searchBox.addEventListener('keyup',e=>{
-      if(e.target.value.trim().length>2) searchYouTube(e.target.value.trim());
-    });
-
-    showTab('trending');
   </script>
 </body>
 </html>
