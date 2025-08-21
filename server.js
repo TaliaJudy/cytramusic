@@ -1,33 +1,32 @@
-import express from "express";
-import fetch from "node-fetch";
-import cors from "cors";
+const express = require("express");
+const { exec } = require("child_process");
+const cors = require("cors");
 
 const app = express();
 app.use(cors());
+app.use(express.json());
 
-const RAPID_API_KEY = "e2fe6c2901msh58f8264b0440a0ap167959jsnae5287575407";
-const RAPID_API_HOST = "youtube-to-mp3-converter2.p.rapidapi.com";
+// Download endpoint
+app.get("/download", (req, res) => {
+  const url = req.query.url;
+  const format = req.query.format || "mp3"; // default mp3
 
-app.get("/convert", async (req, res) => {
-  const videoId = req.query.id;
-  if (!videoId) return res.status(400).json({ error: "Missing videoId" });
-
-  try {
-    const response = await fetch(
-      `https://${RAPID_API_HOST}/?videoId=${videoId}`,
-      {
-        method: "GET",
-        headers: {
-          "x-rapidapi-host": RAPID_API_HOST,
-          "x-rapidapi-key": RAPID_API_KEY
-        }
-      }
-    );
-    const data = await response.json();
-    res.json(data);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
+  if (!url) {
+    return res.status(400).json({ error: "Missing YouTube URL" });
   }
+
+  // Build yt-dlp command
+  let command = `yt-dlp -f bestaudio --extract-audio --audio-format ${format} --get-url "${url}"`;
+
+  exec(command, (error, stdout, stderr) => {
+    if (error) {
+      console.error(stderr);
+      return res.status(500).json({ error: "Download failed" });
+    }
+    res.json({ downloadUrl: stdout.trim() });
+  });
 });
 
-app.listen(3000, () => console.log("Server running on port 3000"));
+app.listen(5000, () => {
+  console.log("✅ Y2Mate-like API running on http://localhost:5000");
+});
