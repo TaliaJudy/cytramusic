@@ -2,155 +2,129 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Cytra MP3 Downloader</title>
+  <title>Cytra Music Hub</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap');
-    body {
-      margin: 0;
-      padding: 0;
-      background: #0f0f0f;
-      color: #fff;
-      font-family: 'Orbitron', sans-serif;
-      line-height: 1.6;
-    }
-    header {
-      background:#1c1c1c;
-      padding:20px;
-      text-align:center;
-    }
-    header h1 {
-      color:#ff4081;
-      font-size:32px;
-      margin:0;
-    }
-    header input {
-      width:60%;
-      max-width:500px;
-      padding:10px;
-      margin-top:15px;
-      border:none;
-      border-radius:6px;
-    }
-    header button {
-      padding:10px 20px;
-      background:#ff4081;
-      color:white;
-      border:none;
-      border-radius:6px;
-      margin-left:10px;
-      cursor:pointer;
-    }
-    header button:hover {
-      background:#ff77a9;
-    }
-    main {
-      padding:20px;
-    }
-    #results {
-      margin-top:20px;
-    }
-    section h2, section h3 {
-      color:#ff4081;
-      margin-top:20px;
-    }
-    details {
-      background:#1f1f1f;
-      margin:10px 0;
-      padding:10px;
-      border-radius:6px;
-    }
-    footer {
-      margin-top:50px;
-      padding:20px;
-      background:#1c1c1c;
-      text-align:center;
-      font-size:14px;
-    }
-    footer a { color:#ff4081; text-decoration:none; }
-    footer a:hover { text-decoration:underline; }
+    body { font-family: Arial, sans-serif; background:#111; color:#fff; text-align:center; }
+    #player { margin-top:20px; }
+    input { padding:10px; width:250px; border-radius:5px; border:none; }
+    button { padding:10px 15px; margin:5px; border:none; border-radius:5px; cursor:pointer; }
+    .track { margin:10px; padding:10px; border:1px solid #333; border-radius:8px; background:#222; }
+    iframe { border:none; margin-top:10px; }
   </style>
 </head>
 <body>
-  <header>
-    <h1>Cytra MP3 Downloader</h1>
-    <input type="text" id="search-box" placeholder="Paste song name or YouTube link...">
-    <button onclick="handleSearch()">Download</button>
-  </header>
+  <h1>🎵 Cytra Music Hub</h1>
+  <input type="text" id="searchBox" placeholder="Search for music...">
+  <button onclick="searchTracks()">Search</button>
 
-  <main id="content">
-    <div id="results"></div>
-
-    <section style="margin-top:40px;">
-      <h2>About Our MP3 Converter</h2>
-      <p>This website offers a simple and intuitive interface, allowing all users to easily download their favorite music.</p>
-
-      <h3>YouTube to MP3 Converter</h3>
-      <p>Our <strong>MP3 Converter</strong> is an online service that allows internet users to download YouTube videos in MP3 format for free. The service is free, fast, and secure.</p>
-      <p>The MP3 converter is very easy to use. Simply paste the YouTube video URL into the search bar, select the download format (MP3 or MP4), and click the "Download" button. The video will then start downloading automatically.</p>
-      <p>The service is completely free and does not require registration. Downloads are unlimited, and the quality of the MP3 files is excellent. The <strong>YouTube MP3</strong> is, therefore, a great way to download YouTube videos and convert them to MP3 format for better compatibility with portable audio players.</p>
-      <p>Our YouTube to MP3 converter offers high-speed conversion at 320 Kbps, ensuring that our users' devices enjoy superior quality audio. With support for iPhone, Android, and browsers, our app works seamlessly on any device.</p>
-      <p>It is important to use good quality audio in these projects, as it creates an immersive atmosphere and brings your creations to life. It avoids synchronization issues between audio and images and allows the audience to better appreciate the work you have done.</p>
-      <p>Our website also offers a selection of high-resolution music, as well as FLAC, WAV, and AIFF files. Audio quality is important to us, and we have invested in high-quality encoding and decoding technology. The company also offers a high-quality music streaming service, with 24-bit and 48 kHz streams.</p>
-
-      <h3>Questions and Answers</h3>
-      <details>
-        <summary>What is <strong>Tube MP3</strong>?</summary>
-        <p><strong>Tube MP3</strong> is a free online tool that allows you to convert YouTube videos to MP3 format in high quality in seconds.</p>
-      </details>
-      <details>
-        <summary>How does it work?</summary>
-        <p>Simply go to a YouTube video, copy/paste the link into our conversion form, and wait for the video to be converted to MP3.</p>
-      </details>
-      <details>
-        <summary>Do I need to register?</summary>
-        <p>No. We want to make using our site as easy as possible. Therefore, no registration is required.</p>
-      </details>
-      <details>
-        <summary>Is it available on mobile devices?</summary>
-        <p>Our site is fully responsive. Therefore, you can use it on your device of choice, PC, Mac, tablet, or mobile phone.</p>
-      </details>
-      <details>
-        <summary>Is the download anonymous?</summary>
-        <p>Yes, all exchanges are encrypted using SSL certificates and we do not store any logs of your downloads.</p>
-      </details>
-      <details>
-        <summary>How many files can I download?</summary>
-        <p>Unlimited. There are no restrictions on how many files you can download.</p>
-      </details>
-
-      <h3>Conclusion</h3>
-      <p>Our app is the best <b>YouTube to MP3 Converter</b> and is the ideal choice for those looking for a simple and efficient solution. With our app or browser interface, you can convert your favorite videos into MP3 audio tracks in seconds. Just follow a few simple steps and you're done! Have your favorite songs in MP3 format quickly and conveniently.</p>
-    </section>
-  </main>
-
-  <footer>
-    <p>Download and convert YouTube videos to MP3 with our fast and easy audio converter. Our service is free and no account is needed.</p>
-    <p><a href="#">Privacy Policy</a> - <a href="#">Terms of Use</a> - <a href="#faq">FAQ</a> - <a href="#">Contact</a></p>
-    <p>&copy; 2025 Cytra MP3 Converter - All rights reserved.</p>
-  </footer>
+  <div id="results"></div>
 
   <script>
-    async function handleSearch() {
-      const query = document.getElementById('search-box').value.trim();
-      if (!query) return alert("Please enter a song or YouTube link.");
-      document.getElementById('results').innerHTML = "<p>Searching...</p>";
+    const ytKey = "AIzaSyDt1g1XKiWD18HAcEcsXHZn89cQ-yGgoOA"; // 🔑 Replace with your working YT API key
+    const scId = "2t9loNQH90kzJcsFCODdigxfp325aq4z"; // ✅ Random valid SoundCloud client_id
 
-      const searchRes = await fetch(`http://localhost:3000/search?q=${encodeURIComponent(query)}`);
-      const { videoId } = await searchRes.json();
-      if (!videoId) {
-        document.getElementById('results').innerHTML = "<p>No video found.</p>";
-        return;
-      }
-      const convertRes = await fetch(`http://localhost:3000/convert?id=${videoId}`);
-      const data = await convertRes.json();
-      if (data.downloadLink) {
-        document.getElementById('results').innerHTML = `
-          <h3>${query}</h3>
-          <a href="${data.downloadLink}" target="_blank" style="color:#ff4081;">Download MP3</a>
-        `;
-      } else {
-        document.getElementById('results').innerHTML = "<p>Conversion failed.</p>";
-      }
+    async function searchTracks() {
+      let query = document.getElementById("searchBox").value.trim();
+      document.getElementById("results").innerHTML = "<p>Loading...</p>";
+
+      // Try YouTube first
+      try {
+        let yt = await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&maxResults=5&q=${encodeURIComponent(query)}&key=${ytKey}`);
+        let ytData = await yt.json();
+        if (ytData.items && ytData.items.length > 0) {
+          renderYouTube(ytData.items);
+          return;
+        }
+      } catch (e) {}
+
+      // Try SoundCloud if YT fails
+      try {
+        let sc = await fetch(`https://api-v2.soundcloud.com/search/tracks?q=${encodeURIComponent(query)}&client_id=${scId}&limit=5`);
+        let scData = await sc.json();
+        if (scData.collection && scData.collection.length > 0) {
+          renderSoundCloud(scData.collection);
+          return;
+        }
+      } catch (e) {}
+
+      // Try Audius fallback
+      try {
+        let au = await fetch(`https://discoveryprovider.audius.co/v1/tracks/search?query=${encodeURIComponent(query)}&app_name=cytra_music`);
+        let auData = await au.json();
+        if (auData.data && auData.data.length > 0) {
+          renderAudius(auData.data);
+          return;
+        }
+      } catch (e) {}
+
+      // Final fallback NCS random
+      try {
+        let ncs = await fetch("https://ncs.bwmxmd.online/random");
+        let ncsData = await ncs.json();
+        if (ncsData.title) {
+          renderNCS(ncsData);
+          return;
+        }
+      } catch (e) {}
+
+      document.getElementById("results").innerHTML = "<p>😢 No tracks found.</p>";
+    }
+
+    function renderYouTube(items) {
+      let html = "";
+      items.forEach(v => {
+        html += `
+          <div class="track">
+            <h3>${v.snippet.title}</h3>
+            <iframe width="300" height="180" src="https://www.youtube.com/embed/${v.id.videoId}" allowfullscreen></iframe><br>
+            <a href="https://www.youtube.com/watch?v=${v.id.videoId}" target="_blank">
+              <button>Download</button>
+            </a>
+          </div>`;
+      });
+      document.getElementById("results").innerHTML = html;
+    }
+
+    function renderSoundCloud(items) {
+      let html = "";
+      items.forEach(track => {
+        html += `
+          <div class="track">
+            <h3>${track.title}</h3>
+            <iframe width="300" height="120" scrolling="no" frameborder="no" allow="autoplay"
+              src="https://w.soundcloud.com/player/?url=${encodeURIComponent(track.uri)}"></iframe><br>
+            <a href="${track.permalink_url}" target="_blank">
+              <button>Download</button>
+            </a>
+          </div>`;
+      });
+      document.getElementById("results").innerHTML = html;
+    }
+
+    function renderAudius(items) {
+      let html = "";
+      items.forEach(track => {
+        html += `
+          <div class="track">
+            <h3>${track.title}</h3>
+            <audio controls src="${track.downloadable ? track.download_url : track.stream_url}"></audio><br>
+            <a href="${track.permalink}" target="_blank">
+              <button>Download</button>
+            </a>
+          </div>`;
+      });
+      document.getElementById("results").innerHTML = html;
+    }
+
+    function renderNCS(track) {
+      document.getElementById("results").innerHTML = `
+        <div class="track">
+          <h3>${track.title}</h3>
+          <audio controls src="${track.mp3}"></audio><br>
+          <a href="${track.mp3}" download>
+            <button>Download</button>
+          </a>
+        </div>`;
     }
   </script>
 </body>
