@@ -1,12 +1,10 @@
 import express from "express";
-import cors from "cors";
-import fetch from "node-fetch";
 
 const app = express();
-app.use(cors());
+const PORT = 3000;
 
 app.get("/", (req, res) => {
-  res.send("✅ CytraMusic API is running!");
+  res.send("Cytra Music is running 🎶🔥");
 });
 
-app.listen(3000, () => console.log("🚀 Server running at http://localhost:3000"));
+app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
