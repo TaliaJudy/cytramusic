@@ -1,16 +1,12 @@
-Cytra Global Music App - Setup Instructions
-===========================================
+# 🎶 YT Downloader
 
-1. Install Node.js (https://nodejs.org).
-2. Open terminal inside this folder.
+A simple YouTube downloader using **yt-dlp** + Node.js backend + HTML/JS frontend.
 
-3. Install dependencies:
-   npm install
+---
 
-4. Run backend:
-   npm start
+## 🚀 How to Run
 
-5. Open index.html in a browser (double click or use Live Server).
-6. Ensure server is running (http://localhost:3000).
-
-Now you can play and download music with the "Download MP3" button.
+### 1. Clone Repo
+```bash
+git clone https://github.com/your-username/yt-downloader.git
+cd yt-downloader/backend
