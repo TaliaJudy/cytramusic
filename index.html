@@ -1,43 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Cytra YouTube Downloader 😈</title>
-  <style>
-    body { font-family: Arial, sans-serif; background: #111; color: white; text-align: center; }
-    input, select, button { padding: 10px; margin: 10px; border-radius: 8px; }
-    button { background: #ff4747; border: none; cursor: pointer; color: white; font-weight: bold; }
-    button:hover { background: #ff6a6a; }
-  </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>YT Downloader</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <h1>🎶 Cytra’s Y2Mate Alternative 😈</h1>
-  <input type="text" id="url" placeholder="Paste YouTube URL" size="50">
-  <select id="format">
-    <option value="mp3">MP3</option>
-    <option value="mp4">MP4</option>
-  </select>
-  <button onclick="download()">Download</button>
-  <p id="status"></p>
-
-  <script>
-    async function download() {
-      const url = document.getElementById("url").value;
-      const format = document.getElementById("format").value;
-      document.getElementById("status").innerText = "Fetching download link...";
-
-      try {
-        const res = await fetch(`http://localhost:5000/download?url=${encodeURIComponent(url)}&format=${format}`);
-        const data = await res.json();
-        if (data.downloadUrl) {
-          document.getElementById("status").innerHTML = `<a href="${data.downloadUrl}" target="_blank">⬇️ Click to Download</a>`;
-        } else {
-          document.getElementById("status").innerText = "❌ Failed to get link";
-        }
-      } catch (err) {
-        document.getElementById("status").innerText = "⚠️ Error: " + err.message;
-      }
-    }
-  </script>
+  <h1>🎶 YT Downloader</h1>
+  <input id="ytUrl" type="text" placeholder="Paste YouTube URL here..." />
+  <button onclick="getDownload()">Get Download Link</button>
+  <div id="result"></div>
+  <script src="script.js"></script>
 </body>
 </html>
