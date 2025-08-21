@@ -2,129 +2,41 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Cytra Music Hub</title>
+  <title>Cytra YouTube Downloader 😈</title>
   <style>
-    body { font-family: Arial, sans-serif; background:#111; color:#fff; text-align:center; }
-    #player { margin-top:20px; }
-    input { padding:10px; width:250px; border-radius:5px; border:none; }
-    button { padding:10px 15px; margin:5px; border:none; border-radius:5px; cursor:pointer; }
-    .track { margin:10px; padding:10px; border:1px solid #333; border-radius:8px; background:#222; }
-    iframe { border:none; margin-top:10px; }
+    body { font-family: Arial, sans-serif; background: #111; color: white; text-align: center; }
+    input, select, button { padding: 10px; margin: 10px; border-radius: 8px; }
+    button { background: #ff4747; border: none; cursor: pointer; color: white; font-weight: bold; }
+    button:hover { background: #ff6a6a; }
   </style>
 </head>
 <body>
-  <h1>🎵 Cytra Music Hub</h1>
-  <input type="text" id="searchBox" placeholder="Search for music...">
-  <button onclick="searchTracks()">Search</button>
-
-  <div id="results"></div>
+  <h1>🎶 Cytra’s Y2Mate Alternative 😈</h1>
+  <input type="text" id="url" placeholder="Paste YouTube URL" size="50">
+  <select id="format">
+    <option value="mp3">MP3</option>
+    <option value="mp4">MP4</option>
+  </select>
+  <button onclick="download()">Download</button>
+  <p id="status"></p>
 
   <script>
-    const ytKey = "AIzaSyDt1g1XKiWD18HAcEcsXHZn89cQ-yGgoOA"; // 🔑 Replace with your working YT API key
-    const scId = "2t9loNQH90kzJcsFCODdigxfp325aq4z"; // ✅ Random valid SoundCloud client_id
+    async function download() {
+      const url = document.getElementById("url").value;
+      const format = document.getElementById("format").value;
+      document.getElementById("status").innerText = "Fetching download link...";
 
-    async function searchTracks() {
-      let query = document.getElementById("searchBox").value.trim();
-      document.getElementById("results").innerHTML = "<p>Loading...</p>";
-
-      // Try YouTube first
       try {
-        let yt = await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&maxResults=5&q=${encodeURIComponent(query)}&key=${ytKey}`);
-        let ytData = await yt.json();
-        if (ytData.items && ytData.items.length > 0) {
-          renderYouTube(ytData.items);
-          return;
+        const res = await fetch(`http://localhost:5000/download?url=${encodeURIComponent(url)}&format=${format}`);
+        const data = await res.json();
+        if (data.downloadUrl) {
+          document.getElementById("status").innerHTML = `<a href="${data.downloadUrl}" target="_blank">⬇️ Click to Download</a>`;
+        } else {
+          document.getElementById("status").innerText = "❌ Failed to get link";
         }
-      } catch (e) {}
-
-      // Try SoundCloud if YT fails
-      try {
-        let sc = await fetch(`https://api-v2.soundcloud.com/search/tracks?q=${encodeURIComponent(query)}&client_id=${scId}&limit=5`);
-        let scData = await sc.json();
-        if (scData.collection && scData.collection.length > 0) {
-          renderSoundCloud(scData.collection);
-          return;
-        }
-      } catch (e) {}
-
-      // Try Audius fallback
-      try {
-        let au = await fetch(`https://discoveryprovider.audius.co/v1/tracks/search?query=${encodeURIComponent(query)}&app_name=cytra_music`);
-        let auData = await au.json();
-        if (auData.data && auData.data.length > 0) {
-          renderAudius(auData.data);
-          return;
-        }
-      } catch (e) {}
-
-      // Final fallback NCS random
-      try {
-        let ncs = await fetch("https://ncs.bwmxmd.online/random");
-        let ncsData = await ncs.json();
-        if (ncsData.title) {
-          renderNCS(ncsData);
-          return;
-        }
-      } catch (e) {}
-
-      document.getElementById("results").innerHTML = "<p>😢 No tracks found.</p>";
-    }
-
-    function renderYouTube(items) {
-      let html = "";
-      items.forEach(v => {
-        html += `
-          <div class="track">
-            <h3>${v.snippet.title}</h3>
-            <iframe width="300" height="180" src="https://www.youtube.com/embed/${v.id.videoId}" allowfullscreen></iframe><br>
-            <a href="https://www.youtube.com/watch?v=${v.id.videoId}" target="_blank">
-              <button>Download</button>
-            </a>
-          </div>`;
-      });
-      document.getElementById("results").innerHTML = html;
-    }
-
-    function renderSoundCloud(items) {
-      let html = "";
-      items.forEach(track => {
-        html += `
-          <div class="track">
-            <h3>${track.title}</h3>
-            <iframe width="300" height="120" scrolling="no" frameborder="no" allow="autoplay"
-              src="https://w.soundcloud.com/player/?url=${encodeURIComponent(track.uri)}"></iframe><br>
-            <a href="${track.permalink_url}" target="_blank">
-              <button>Download</button>
-            </a>
-          </div>`;
-      });
-      document.getElementById("results").innerHTML = html;
-    }
-
-    function renderAudius(items) {
-      let html = "";
-      items.forEach(track => {
-        html += `
-          <div class="track">
-            <h3>${track.title}</h3>
-            <audio controls src="${track.downloadable ? track.download_url : track.stream_url}"></audio><br>
-            <a href="${track.permalink}" target="_blank">
-              <button>Download</button>
-            </a>
-          </div>`;
-      });
-      document.getElementById("results").innerHTML = html;
-    }
-
-    function renderNCS(track) {
-      document.getElementById("results").innerHTML = `
-        <div class="track">
-          <h3>${track.title}</h3>
-          <audio controls src="${track.mp3}"></audio><br>
-          <a href="${track.mp3}" download>
-            <button>Download</button>
-          </a>
-        </div>`;
+      } catch (err) {
+        document.getElementById("status").innerText = "⚠️ Error: " + err.message;
+      }
     }
   </script>
 </body>
