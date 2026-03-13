@@ -7,7 +7,7 @@ async function getDownload() {
 
   try {
     // Change this to your deployed backend API
-    const res = await fetch(`http://localhost:5000/download?url=${encodeURIComponent(url)}`);
+    const res = await fetch(`http://localhost:3000/download?url=${encodeURIComponent(url)}`);
     const data = await res.json();
     if (data.download) {
       document.getElementById("result").innerHTML =
